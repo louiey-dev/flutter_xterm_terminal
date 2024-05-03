@@ -170,7 +170,13 @@ class _MenuPageState extends State<MenuPage> {
           width: 200,
           child: TextField(
             controller: inputController,
-            onSubmitted: (value) {
+            // onSubmitted: (value) {   // Text 입력 후 커서가 그 상태 위치를 유지하지 않고 focus를 잃어버린다
+            //   String cmd = "${inputController.text}\r";
+            //   terminal.onOutput!(cmd);
+            //   inputController.text = "";
+            // },
+            onEditingComplete: () {
+              // Text 입력 후 커서가 그 상태 위치를 유지한다.
               String cmd = "${inputController.text}\r";
               terminal.onOutput!(cmd);
               inputController.text = "";
