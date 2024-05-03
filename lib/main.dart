@@ -1,14 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_pty/flutter_pty.dart';
 import 'package:flutter_xterm_terminal/page/menu_page.dart';
 import 'package:flutter_xterm_terminal/page/terminal_page.dart';
 import 'package:flutter_xterm_terminal/platform_menu.dart';
-import 'package:xterm/xterm.dart';
 
 void main() {
   runApp(const MyApp());

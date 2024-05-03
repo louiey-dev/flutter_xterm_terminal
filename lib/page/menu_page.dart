@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:flutter_xterm_terminal/page/terminal_page.dart';
 import 'package:flutter_xterm_terminal/utils/utils.dart';
-import 'package:flutter_xterm_terminal/widget/my_widget.dart';
 
 List<SerialPort> portList = [];
 SerialPort? mSp;
@@ -138,27 +137,16 @@ class _MenuPageState extends State<MenuPage> {
                   // utils.showSnackbar(
                   //     context, "Serial port opened, ${mSp!.name}");
                   String configCmd =
-                      "plink -serial ${mSp!.name} -sercfg $menuBaudrate,8,1,N,N\n\r";
-                  // "plink -serial \\\\.\\${mSp!.name} -sercfg $menuBaudrate,8,1,N,N\n\r";
-                  terminal.onOutput!(configCmd);
+                      // "plink -serial ${mSp!.name} -sercfg $menuBaudrate,8,1,N,N\n\r";
+                      'plink -serial \\\\.\\${mSp!.name} -sercfg $menuBaudrate,8,1,N,N\r';
+                  // TODO : Cannot fix problem here. If send here, com port open error happened. So copied text to inputcontroller and send via Send key
+                  // terminal.onOutput!(configCmd);
+                  inputController.text = configCmd;
+                  // terminal.onOutput!("${inputController.text}\r");
+                  // inputController.text = "";
                   // terminal.write("ls\n\r");
-                  utils.log(configCmd);
+                  // utils.log(configCmd);
                 }
-                final reader = SerialPortReader(mSp!);
-                reader.stream.listen((data) {
-                  // if (makeMessage(context, data, data.length) == true) {
-                  //   setState(() {});
-                  // }
-                  utils.log(
-                      'received: ${data.length}, ${String.fromCharCodes(data)}');
-                  // receiveDataList.add(data);
-                  // setState(() {});
-                }, onError: (error) {
-                  if (error is SerialPortError) {
-                    utils.log(
-                        'error: ${error.message}, code: ${error.errorCode}');
-                  }
-                });
               }
             }
             setState(() {});
@@ -170,13 +158,13 @@ class _MenuPageState extends State<MenuPage> {
           width: 200,
           child: TextField(
             controller: inputController,
-            // onSubmitted: (value) {   // Text 입력 후 커서가 그 상태 위치를 유지하지 않고 focus를 잃어버린다
+            // onSubmitted: (value) {   // Text 입력 후 커서가 그 상태 위치를 유지하지 않고 focus를 잃어버린다. 엔터키 입력 후 focus를 잃어버려 마우스로 다시 가져와야한다.
             //   String cmd = "${inputController.text}\r";
             //   terminal.onOutput!(cmd);
             //   inputController.text = "";
             // },
             onEditingComplete: () {
-              // Text 입력 후 커서가 그 상태 위치를 유지한다.
+              // Text 입력 후 커서가 그 상태 위치를 유지한다. 엔터키 입력 후 바로 text 입력해서 사용할 수 있다.
               String cmd = "${inputController.text}\r";
               terminal.onOutput!(cmd);
               inputController.text = "";
@@ -189,6 +177,7 @@ class _MenuPageState extends State<MenuPage> {
             String cmd = "${inputController.text}\r";
             // terminal.write("${inputController.text}\r");
             terminal.onOutput!(cmd);
+            inputController.text = "";
           },
           label: const Text("Send"),
           icon: const Icon(Icons.send),

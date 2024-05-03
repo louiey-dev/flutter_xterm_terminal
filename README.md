@@ -22,5 +22,6 @@ Serial terminal sample application
 ## TODO
 
 - Fix "ERROR_ACCESS_DENIED" issue when open COM port via Open button
+  - made workaround : copy cmd text to input controller and press send key. This is working
 - Add log file option
 - Add more buttons accordingly

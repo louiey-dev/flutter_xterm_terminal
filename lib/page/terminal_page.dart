@@ -79,6 +79,10 @@ class _TerminalPageState extends State<TerminalPage> {
             }
           }
         },
+        // onKeyEvent: (n, e) {
+        //   print("$n, $e");
+        //   return KeyEventResult.handled;
+        // },
       ),
     );
   }
