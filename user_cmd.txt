@@ -1,0 +1,6 @@
+cd /var/run
+iwconfig
+ifconfig wlan0 up
+iwlist wlan0 scan | grep ESSID
+./wpa_supplicant -B -Dnl80211 -iwlan0 -c /var/run/wpa.semi.conf
+udhcpc

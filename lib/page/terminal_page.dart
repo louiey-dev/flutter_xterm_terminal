@@ -61,6 +61,7 @@ class _TerminalPageState extends State<TerminalPage> {
   Widget build(BuildContext context) {
     return Expanded(
       child: TerminalView(
+        padding: const EdgeInsets.all(10),
         terminal,
         controller: terminalController,
         autofocus: true,
